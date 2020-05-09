@@ -4,7 +4,7 @@ The __slides__ describing the project's architecture, functionalities and fundam
 
 The __Trello shared dashboard__ about this project ideas and evolution is avaiable at [this link](https://trello.com/b/a8lB56LH/tedxproject) (via trello.com)
 
-Team members (in alphabetical order):
+Team members (listed in alphabetical order):
 - Luca Ghislotti (n. 1052975);
 - Andrea Marinò (n. 1053230);
 - Alessandro Mazzola (n. 1053121);
