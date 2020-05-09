@@ -1,4 +1,5 @@
-# Mobile and Cloud Technologies Project
+# TEDindeX
+## Mobile and Cloud Technologies Project
 
 The __slides__ describing the project's architecture, functionalities and fundamental goal are available at [this link](https://slides.com/lucaghislotti/tcm_lab_project) (via slides.com). 
 
