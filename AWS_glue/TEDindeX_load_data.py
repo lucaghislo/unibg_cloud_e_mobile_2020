@@ -63,7 +63,7 @@ tedx_dataset_agg.printSchema()
 watch_next_dataset_agg = watch_next_dataset.groupBy(col("idx").alias("idx_ref")).agg(collect_list("url").alias("watch_next_url"))
 watch_next_dataset_agg.printSchema()
 
-tedx_dataset_agg = tedx_dataset.join(watch_next_dataset_agg, tedx_dataset.idx == watch_next_dataset_agg.idx_ref, "left").drop("idx_ref").select(col("idx").alias("_id"), col("*")).drop("idx")
+tedx_dataset_agg = tedx_dataset.join(watch_next_dataset_agg, tedx_dataset.idx == watch_next_dataset_agg.idx_ref, "left").drop("idx_ref").select(col("idx").alias("_id").distinct(), col("*")).drop("idx")
 tedx_dataset_agg.printSchema()
 
 # ADD INFO ABOUT SPEAKER
