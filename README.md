@@ -1,6 +1,7 @@
 <img src="images/Logo.png" width="320" height="80"></img>
 ### Mobile and Cloud Technologies Project
 
+A brief description of all the material avaiable in this repository:
 1) The __slides__ describing the project's architecture, functionalities and fundamental goal are available at [this link](https://slides.com/lucaghislotti/tcm_lab_project) (via slides.com). 
 
 2) The __slides__ describing the system setup, data load processes and datasets are available at [this link](https://slides.com/lucaghislotti/tedindexdataload) (via slides.com). 
