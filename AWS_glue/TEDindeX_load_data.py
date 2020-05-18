@@ -4,7 +4,7 @@
 import sys
 import json
 import pyspark
-from pyspark.sql.functions import col, collect_list, array_join
+from pyspark.sql.functions import struct, col, collect_list, array_join
 
 from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
@@ -46,7 +46,8 @@ tags_dataset = spark.read.option("header","true").csv(tags_dataset_path)
 
 ## READ WATCH NEXT DATASET
 watch_next_dataset_path = "s3://lucaghislotti-tedindex-data/watch_next_dataset.csv"
-watch_next_dataset = spark.read.option("header","true").csv(watch_next_dataset_path)
+watch_next_dataset = spark.read.option("header","true").csv(watch_next_dataset_path).dropDuplicates()
+watch_next_dataset.printSchema()
 
 ## READ SPEAKER INFO DATASET
 speaker_info_dataset_path = "s3://lucaghislotti-tedindex-data/info_speaker.csv"
@@ -63,11 +64,11 @@ tedx_dataset_agg.printSchema()
 watch_next_dataset_agg = watch_next_dataset.groupBy(col("idx").alias("idx_ref")).agg(collect_list("url").alias("watch_next_url"))
 watch_next_dataset_agg.printSchema()
 
-tedx_dataset_agg = tedx_dataset.join(watch_next_dataset_agg, tedx_dataset.idx == watch_next_dataset_agg.idx_ref, "left").drop("idx_ref").select(col("idx").alias("_id").distinct(), col("*")).drop("idx")
+tedx_dataset_agg = tedx_dataset.join(watch_next_dataset_agg, tedx_dataset.idx == watch_next_dataset_agg.idx_ref, "left").drop("idx_ref").select(col("idx").alias("_id"), col("*")).drop("idx")
 tedx_dataset_agg.printSchema()
 
 # ADD INFO ABOUT SPEAKER
-tedx_dataset_agg = tedx_dataset_agg.join(speaker_info_dataset, tedx_dataset_agg.main_speaker == speaker_info_dataset.name_speaker, "left").select(col("name_speaker"), col("*")).drop("name_speaker")
+tedx_dataset_agg = tedx_dataset_agg.join(speaker_info_dataset, tedx_dataset_agg.main_speaker == speaker_info_dataset.name_speaker, "left").select(col("name_speaker"), struct(col("name_speaker").alias("name_speaker"), col("speaker_link").alias("speaker_link"), col("profession").alias("profession"), col("info_about").alias("info"))).drop("name_speaker")
 tedx_dataset_agg.printSchema()
 
 mongo_uri = "mongodb://lucaghislotti-shard-00-00-9vbja.mongodb.net:27017,lucaghislotti-shard-00-01-9vbja.mongodb.net:27017,lucaghislotti-shard-00-02-9vbja.mongodb.net:27017"
