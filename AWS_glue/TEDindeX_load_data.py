@@ -68,7 +68,7 @@ tedx_dataset_agg = tedx_dataset.join(watch_next_dataset_agg, tedx_dataset.idx ==
 tedx_dataset_agg.printSchema()
 
 # ADD INFO ABOUT SPEAKER
-tedx_dataset_agg = tedx_dataset_agg.join(speaker_info_dataset, tedx_dataset_agg.main_speaker == speaker_info_dataset.name_speaker, "left").select(col("name_speaker"), struct(col("name_speaker").alias("name_speaker"), col("speaker_link").alias("speaker_link"), col("profession").alias("profession"), col("info_about").alias("info"))).drop("name_speaker")
+tedx_dataset_agg = tedx_dataset_agg.join(speaker_info_dataset, tedx_dataset_agg.main_speaker == speaker_info_dataset.name_speaker, "left").select(col("*"), struct(col("name_speaker").alias("speaker_name"), col("speaker_link").alias("speaker_url"), col("profession").alias("speaker_profession"), col("info_about").alias("info")).alias("speaker")).drop("name_speaker").drop("speaker_link").drop("profession").drop("info_about")
 tedx_dataset_agg.printSchema()
 
 mongo_uri = "mongodb://lucaghislotti-shard-00-00-9vbja.mongodb.net:27017,lucaghislotti-shard-00-01-9vbja.mongodb.net:27017,lucaghislotti-shard-00-02-9vbja.mongodb.net:27017"
