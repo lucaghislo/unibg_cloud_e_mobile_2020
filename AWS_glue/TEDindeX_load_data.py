@@ -14,7 +14,7 @@ from awsglue.job import Job
 
 
 ##### FROM FILES
-tedx_dataset_path = "s3://lucaghislotti-tedindex-data/tedx_dataset.csv"
+tedx_dataset_path = "s3://tedindex-data/tedx_dataset.csv"
 
 ###### READ PARAMETERS
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
@@ -41,16 +41,16 @@ print(f"Number of items from RAW DATA with NOT NULL KEY {count_items_null}")
 
 
 ## READ TAGS DATASET
-tags_dataset_path = "s3://lucaghislotti-tedindex-data/tags_dataset.csv"
+tags_dataset_path = "s3://tedindex-data/tags_dataset.csv"
 tags_dataset = spark.read.option("header","true").csv(tags_dataset_path)
 
 ## READ WATCH NEXT DATASET
-watch_next_dataset_path = "s3://lucaghislotti-tedindex-data/watch_next_dataset.csv"
+watch_next_dataset_path = "s3://tedindex-data/watch_next_dataset.csv"
 watch_next_dataset = spark.read.option("header","true").csv(watch_next_dataset_path).dropDuplicates()
 watch_next_dataset.printSchema()
 
 ## READ SPEAKER INFO DATASET
-speaker_info_dataset_path = "s3://lucaghislotti-tedindex-data/info_speaker.csv"
+speaker_info_dataset_path = "s3://tedindex-data/info_speaker.csv"
 speaker_info_dataset = spark.read.option("header","true").csv(speaker_info_dataset_path)
 
 # CREATE THE AGGREGATE MODEL, ADD TAGS TO TEDX_DATASET
@@ -75,8 +75,8 @@ mongo_uri = "mongodb://lucaghislotti-shard-00-00-9vbja.mongodb.net:27017,lucaghi
 
 write_mongo_options = {
     "uri": mongo_uri,
-    "database": "unibg_tedx",
-    "collection": "tedz_data",
+    "database": "TCM_TEDindeX",
+    "collection": "tedx_data",
     "username": "admin",
     "password": "skywalker",
     "ssl": "true",
