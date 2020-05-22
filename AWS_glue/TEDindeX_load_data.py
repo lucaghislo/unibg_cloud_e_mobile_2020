@@ -1,4 +1,4 @@
-###### TEDx-Load-Aggregate-Model
+###### TEDindeX-Load-Aggregate-Model
 ######
 
 import sys
