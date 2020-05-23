@@ -29,7 +29,7 @@ module.exports.get_watch_next_by_idx = (event, context, callback) => {
     
     connect_to_db().then(() => {
         console.log('=> get_all talks');
-        talk.find({_id: body.id})
+        talk.find({_id: body.id}, {watch_next_url: 1, _id: 0})
             .skip((body.doc_per_page * body.page) - body.doc_per_page)
             .limit(body.doc_per_page)
             .then(talks => {
