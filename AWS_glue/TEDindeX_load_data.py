@@ -61,10 +61,10 @@ tedx_dataset_agg = tedx_dataset.join(tags_dataset_agg, tedx_dataset.idx == tags_
 tedx_dataset_agg.printSchema()
 
 # ADD IDX OF WATCH NEXT VIDEOS
-watch_next_dataset_agg = watch_next_dataset.groupBy(col("idx").alias("idx_ref")).agg(collect_list("url").alias("watch_next_url"))
+watch_next_dataset_agg = watch_next_dataset.groupBy(col("idx").alias("idx_ref2")).agg(collect_list("url").alias("watch_next_url"))
 watch_next_dataset_agg.printSchema()
 
-tedx_dataset_agg = tedx_dataset.join(watch_next_dataset_agg, tedx_dataset.idx == watch_next_dataset_agg.idx_ref, "left").drop("idx_ref").select(col("idx").alias("_id"), col("*")).drop("idx")
+tedx_dataset_agg = tedx_dataset_agg.join(watch_next_dataset_agg, tedx_dataset_agg._id== watch_next_dataset_agg.idx_ref2, "left").drop("idx_ref2").select(col("_id"), col("*"))
 tedx_dataset_agg.printSchema()
 
 # ADD INFO ABOUT SPEAKER
