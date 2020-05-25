@@ -31,8 +31,6 @@ module.exports.get_talk_by_url = (event, context, callback) => {
     connect_to_db().then(() => {
         console.log('=> get_all talks');
         
-        const ris=talk.find({url: body.url})
-        
        talk.find({url: body.url})
             .skip((body.doc_per_page * body.page) - body.doc_per_page)
             .limit(body.doc_per_page)
